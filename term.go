@@ -74,6 +74,7 @@ func (t *Term) PrintTemp(message ...interface{}) *Term {
 func (t *Term) PrintPrompt(message string, suffix ...string) *Term {
 	if len(suffix) == 0 {
 		fmt.Printf("%s: ", message)
+		return t
 	}
 
 	s := strings.Join(suffix, " ")
