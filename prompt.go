@@ -3,7 +3,6 @@ package prompt
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -12,6 +11,8 @@ import (
 // ErrInvalidInput implies the imput entered was invalid
 var ErrInvalidInput = errors.New("invalid input")
 
+var terminal = Terminal
+
 // YesNo prompts the user for a yes/no response.
 // In case of an invalid input, it returns ErrInvalidInput.
 func YesNo(message string, defaultValue bool) (bool, error) {
@@ -19,7 +20,7 @@ func YesNo(message string, defaultValue bool) (bool, error) {
 	if defaultValue {
 		suffix = "(Y/n)"
 	}
-	printPrompt(message, suffix)
+	terminal.PrintPrompt(message, suffix)
 	reader := bufio.NewReader(os.Stdin)
 	char, _, err := reader.ReadRune()
 	if err != nil {
@@ -45,7 +46,7 @@ func YesNoWithRetry(message string, defaultValue bool) (bool, error) {
 	if defaultValue {
 		suffix = "(Y/n)"
 	}
-	printPrompt(message, suffix)
+	terminal.PrintPrompt(message, suffix)
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		char, _, err := reader.ReadRune()
@@ -61,7 +62,7 @@ func YesNoWithRetry(message string, defaultValue bool) (bool, error) {
 		case '\n', '\r':
 			return defaultValue, nil
 		default:
-			printPrompt("Invalid value entered. Please try again", suffix)
+			terminal.PrintPrompt("Invalid value entered. Please try again", suffix)
 		}
 	}
 }
@@ -69,9 +70,9 @@ func YesNoWithRetry(message string, defaultValue bool) (bool, error) {
 // Choice prompts the user for a choice from a list of options returning the index and the option string.
 // In case of an invalid input, it returns ErrInvalidInput.
 func Choice(message string, options []string) (int, string, error) {
-	fmt.Println(message)
+	terminal.Println(message)
 	for i, item := range options {
-		fmt.Println(i+1, item)
+		terminal.Println(i+1, item)
 	}
 
 	choice, err := strconv.Atoi(Input("Enter your choice"))
@@ -90,9 +91,9 @@ func Choice(message string, options []string) (int, string, error) {
 // ChoiceWithRetry prompts the user for a choice from a list of options returning the index and the option string.
 // In case of an invalid input, it prompts again until a valid response is entered.
 func ChoiceWithRetry(message string, options []string) (int, string, error) {
-	fmt.Println(message)
+	terminal.Println(message)
 	for i, item := range options {
-		fmt.Println(i+1, item)
+		terminal.Println(i+1, item)
 	}
 
 	choice, err := strconv.Atoi(Input("Enter your choice"))
@@ -114,7 +115,7 @@ func ChoiceWithRetry(message string, options []string) (int, string, error) {
 
 // Input prompt the user for any user input
 func Input(message string) string {
-	printlnPrompt(message)
+	terminal.PrintPrompt(message)
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	if err != nil {
