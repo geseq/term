@@ -52,6 +52,7 @@ func (t *Term) Println(message ...interface{}) *Term {
 // which will be cleared on hitting [ENTER]
 func (t *Term) PrintTemp(message ...interface{}) *Term {
 	t.EnableAltScreenBuffer().
+		ClearScreen().
 		ClearScreenAndScrollback().
 		Println("").
 		Println("The following message is temporary and will be cleared when you hit [ENTER]").
@@ -62,7 +63,8 @@ func (t *Term) PrintTemp(message ...interface{}) *Term {
 
 	_, _ = bufio.NewReader(os.Stdin).ReadString('\n')
 
-	t.ClearScreenAndScrollback().
+	t.ClearScreen().
+		ClearScreenAndScrollback().
 		DisableAltScreenBuffer()
 
 	return t
