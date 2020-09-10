@@ -53,6 +53,7 @@ func YesNoWithRetry(message string, defaultValue bool) (bool, error) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		char, _, err := reader.ReadRune()
+		terminal.Println("")
 		if err != nil {
 			return defaultValue, err
 		}
@@ -116,7 +117,7 @@ func ChoiceWithRetry(message string, options []string) (int, string, error) {
 
 	choice -= 1
 	for choice < 0 || choice >= len(options) {
-		input, err := Input("nvalid value entered. Please try again")
+		input, err := Input("Invalid value entered. Please try again")
 		if err != nil {
 			return -1, "", ErrInvalidInput
 		}
@@ -137,6 +138,7 @@ func Input(message string) (string, error) {
 	terminal.PrintPrompt(message)
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
+	terminal.Println("")
 	if err != nil {
 		return "", err
 	}
@@ -150,6 +152,7 @@ func Password(message string) (string, error) {
 	terminal.PrintPrompt(message)
 
 	password, err := gosshterm.ReadPassword(int(syscall.Stdin))
+	terminal.Println("")
 	if err != nil {
 		return "", err
 	}
