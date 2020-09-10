@@ -8,7 +8,7 @@ A simple CLI helper module to prompt for user input
 - YesNo: y/n with defaults
 - Choice: from a list of options
 - Input: any user input
-
+- Password: accept user input without showing it on screen
 
 ## Support
 
