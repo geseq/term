@@ -53,7 +53,6 @@ func YesNoWithRetry(message string, defaultValue bool) (bool, error) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		char, _, err := reader.ReadRune()
-		terminal.Println("")
 		if err != nil {
 			return defaultValue, err
 		}
