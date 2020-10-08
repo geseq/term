@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Term provides terminal helper functions
 type Term struct{}
 
 var terminal = &Term{}

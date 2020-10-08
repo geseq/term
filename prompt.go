@@ -86,7 +86,7 @@ func Choice(message string, options []string) (int, string, error) {
 		return -1, "", ErrInvalidInput
 	}
 
-	choice -= 1
+	choice--
 	if choice < 0 || choice >= len(options) {
 		return -1, "", ErrInvalidInput
 	}
@@ -112,7 +112,7 @@ func ChoiceWithRetry(message string, options []string) (int, string, error) {
 		return -1, "", ErrInvalidInput
 	}
 
-	choice -= 1
+	choice--
 	for choice < 0 || choice >= len(options) {
 		input, err := Input("Invalid value entered. Please try again")
 		if err != nil {
@@ -124,7 +124,7 @@ func ChoiceWithRetry(message string, options []string) (int, string, error) {
 			return -1, "", ErrInvalidInput
 		}
 
-		choice -= 1
+		choice--
 	}
 
 	return choice, options[choice], nil
