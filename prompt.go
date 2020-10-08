@@ -114,12 +114,12 @@ func ChoiceWithRetry(message string, options []string) (int, string, error) {
 
 	choice--
 	for choice < 0 || choice >= len(options) {
-		input, err := Input("Invalid value entered. Please try again")
+		input, err = Input("Invalid value entered. Please try again")
 		if err != nil {
 			return -1, "", ErrInvalidInput
 		}
 
-		choice, err := strconv.Atoi(input)
+		choice, err = strconv.Atoi(input)
 		if err != nil {
 			return -1, "", ErrInvalidInput
 		}
