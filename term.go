@@ -9,11 +9,15 @@ import (
 
 type Term struct{}
 
-// Terminal provides terminal helper functions
-var Terminal = Term{}
+var terminal = &Term{}
+
+// Terminal provides a singleton instance of Term
+func Terminal() *Term {
+	return terminal
+}
 
 // NewTerm creates a new instance of Term
-func (t *Term) NewTerm() *Term {
+func NewTerm() *Term {
 	return &Term{}
 }
 

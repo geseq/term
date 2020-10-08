@@ -14,8 +14,6 @@ import (
 // ErrInvalidInput implies the imput entered was invalid
 var ErrInvalidInput = errors.New("invalid input")
 
-var terminal = Terminal
-
 // YesNo prompts the user for a yes/no response.
 // In case of an invalid input, it returns ErrInvalidInput.
 func YesNo(message string, defaultValue bool) (bool, error) {
