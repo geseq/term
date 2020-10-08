@@ -1,6 +1,7 @@
 # Prompt
 
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/geseq/prompt?tab=doc)](https://pkg.go.dev/github.com/geseq/prompt?tab=doc)
+[![CI](https://github.com/geseq/prompt/workflows/test/badge.svg)](https://github.com/geseq/prompt/actions)
 
 A simple CLI helper module to prompt for user input
 
