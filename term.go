@@ -7,55 +7,64 @@ import (
 	"strings"
 )
 
-// Term provides terminal helper functions
-type Term struct{}
+type Term interface {
+	EnableAltScreenBuffer() Term
+	DisableAltScreenBuffer() Term
+	ClearScreen() Term
+	ClearScreenAndScrollback() Term
+	Println(message ...interface{}) Term
+	PrintTemp(message ...interface{}) Term
+	PrintPrompt(message string, suffix ...string) Term
+}
 
-var terminal = &Term{}
+type term struct{}
 
-// Terminal provides a singleton instance of Term
-func Terminal() *Term {
+var terminal = &term{}
+
+// Terminal returns an instance of Term
+func Terminal() Term {
 	return terminal
 }
 
-// NewTerm creates a new instance of Term
-func NewTerm() *Term {
-	return &Term{}
+// Terminal returns a new instance of Term
+func NewTerm() Term {
+	return &term{}
 }
 
 // EnableAltScreenBuffer enables the alternative screen buffer
-func (t *Term) EnableAltScreenBuffer() *Term {
+func (t *term) EnableAltScreenBuffer() Term {
 	fmt.Println("\x1b[?1049h")
 	return t
 }
 
 // DisableAltScreenBuffer disables the alternative screen buffer
-func (t *Term) DisableAltScreenBuffer() *Term {
+func (t *term) DisableAltScreenBuffer() Term {
 	fmt.Println("\x1b[?1049l")
 	return t
 }
 
 // ClearScreen clears the entire screen
-func (t *Term) ClearScreen() *Term {
+func (t *term) ClearScreen() Term {
 	fmt.Println("\x1b[2J")
 	return t
 }
 
 // ClearScreenAndScrollback clears the entire screen and deletes all
 // lines saved in the scrollback buffer
-func (t *Term) ClearScreenAndScrollback() *Term {
+func (t *term) ClearScreenAndScrollback() Term {
 	fmt.Println("\x1b[3J")
 	return t
 }
 
 // Println prints the message to the screen
-func (t *Term) Println(message ...interface{}) *Term {
+func (t *term) Println(message ...interface{}) Term {
 	fmt.Println(message...)
 	return t
 }
 
 // PrintTemp prints a temporary message in the alternative screen buffer
 // which will be cleared on hitting [ENTER]
-func (t *Term) PrintTemp(message ...interface{}) *Term {
+func (t *term) PrintTemp(message ...interface{}) Term {
 	t.EnableAltScreenBuffer().
 		ClearScreen().
 		ClearScreenAndScrollback().
@@ -76,7 +85,7 @@ func (t *Term) PrintTemp(message ...interface{}) *Term {
 }
 
 // PrintPrompt prints a prompt message along with the provided suffixes
-func (t *Term) PrintPrompt(message string, suffix ...string) *Term {
+func (t *term) PrintPrompt(message string, suffix ...string) Term {
 	if len(suffix) == 0 {
 		fmt.Printf("%s: ", message)
 		return t
