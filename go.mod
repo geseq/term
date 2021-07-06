@@ -1,4 +1,4 @@
-module github.com/geseq/prompt
+module github.com/geseq/term
 
 go 1.15
 
